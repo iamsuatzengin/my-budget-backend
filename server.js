@@ -13,7 +13,7 @@ app.use(express.json())
 app.use('/', require('./routes/user'))
 
 app.use(verifyJWT)
-app.use('/transaction', require("./routes/budget")) // önce bu yönlendiriyor
+app.use('/transaction', require("./routes/budget"))
 
 
 mongoose.connection.once('open', () => {
