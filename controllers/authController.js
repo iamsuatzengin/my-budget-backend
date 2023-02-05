@@ -1,6 +1,7 @@
 const User = require('../model/User')
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
+const httpStatus = require('http-status')
 
 const login = async (req, res) => {
     const {email, password} = req.body
@@ -9,7 +10,7 @@ const login = async (req, res) => {
 
     const user = await User.findOne({email: email}).exec()
 
-    if (!user) return res.sendStatus(401)
+    if (!user) return res.sendStatus(httpStatus.UNAUTHORIZED)
     
     const matchPassword = await bcrypt.compare(password, user.password)
     
@@ -22,7 +23,7 @@ const login = async (req, res) => {
         )
         res.json({accessToken: accessToken})
     }else{
-        res.sendStatus(401)
+        res.sendStatus(httpStatus.UNAUTHORIZED)
     }
 }
 
